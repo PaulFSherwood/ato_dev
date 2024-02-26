@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Plane Movement Animation</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <style>
+        #map { height: 400px; }
+    </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<script>
+    var map = L.map('map').setView([51.505, -0.09], 13);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    var planeIcon = L.icon({
+        iconUrl: 'plane-icon.png', // Replace with the path to your plane icon
+        iconSize: [38, 38],
+        iconAnchor: [22, 94],
+        popupAnchor: [-3, -76]
+    });
+
+    var planeMarker = L.marker([51.505, -0.09], {icon: planeIcon}).addTo(map);
+
+    function movePlane(newLat, newLng) {
+        planeMarker.setLatLng([newLat, newLng]);
+    }
+
+    var lat = 51.505;
+    var lng = -0.09;
+    setInterval(function() {
+        lat += 0.001; // Update these values to control the direction and speed of the movement
+        lng += 0.001;
+        movePlane(lat, lng);
+    }, 1000); // Move the plane every 1000 milliseconds (1 second)
+
+</script>
+
+</body>
+</html>
